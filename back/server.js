@@ -38,16 +38,16 @@ app.post('/api/register', async (req, res) => {
             [1, login, password, full_name, phone]
         );
 
-        res.status(201).json({
+        return res.status(201).json({
             message: 'Регистрация успешна',
             user_id: result.insertId
         });
 
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Ошибка сервера' });
+        return res.status(500).json({ error: 'Ошибка сервера' });
     }
 });
+
 
 
 //        войти
@@ -75,7 +75,7 @@ app.post('/api/login', async (req, res) => {
             return res.status(401).json({ error: 'Неверный пароль' });
         }
 
-        res.json({
+        return res.json({
             message: 'Успешный вход',
             user: {
                 id: user.id,
@@ -86,10 +86,10 @@ app.post('/api/login', async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Ошибка сервера' });
+        return res.status(500).json({ error: 'Ошибка сервера' });
     }
 });
+
 
 app.listen(PORT, () => {
     console.log(`Сервер запущен на http://localhost:${PORT}`);

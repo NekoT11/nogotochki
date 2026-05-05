@@ -27,7 +27,14 @@ export function Reg() {
     })
     
     const data = await response.json()
-    console.log(data)
+
+if (!response.ok) {
+  alert(data.error)
+  return
+}
+
+alert('Регистрация успешна')
+
   }
   
   return (

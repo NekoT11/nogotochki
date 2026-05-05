@@ -34,10 +34,11 @@ export function Auth() {
 
       console.log(data)
 
-      if (!res.ok) {
-        alert(data.error || 'Ошибка')
-        return
-      }
+    if (!res.ok) {
+  alert(data.error)
+  return
+}
+
 
       alert('Успешный вход')
 
