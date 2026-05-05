@@ -52,7 +52,47 @@ app.post('/api/register', async (req, res) => {
 });
 
 
+// войти
 
+app.post('/api/login', async (req, res) => {
+    try {
+        const { login, password } = req.body;
+
+        if (!login || !password) {
+            return res.status(400).json({ error: 'Все поля обязательны' });
+        }
+
+        const [users] = await conect.execute(
+            'SELECT * FROM user WHERE login = ?',
+            [login]
+        );
+
+        if (users.length === 0) {
+            return res.status(401).json({ error: 'Пользователь не найден' });
+        }
+
+        const user = users[0];
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(401).json({ error: 'Неверный пароль' });
+        }
+
+        res.json({
+            message: 'Успешный вход',
+            user: {
+                id: user.id,
+                login: user.login,
+                full_name: user.full_name
+            }
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Ошибка сервера' });
+    }
+});
 
 
 
