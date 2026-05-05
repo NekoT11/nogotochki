@@ -1,7 +1,6 @@
 import express from 'express'
 import mysql from 'mysql2/promise'
 import cors from 'cors'
-import bcrypt from 'bcrypt'
 
 const app = express();
 app.use(cors(), express.json());
@@ -9,42 +8,41 @@ app.use(cors(), express.json());
 const conect = mysql.createPool({
     host: "localhost",
     user: "root",
-    database: "nogotochki_db", 
-    password: "NwEr9dw4@?", 
+    database: "nogotochki_db",
+    password: "NwEr9dw4@?",
 });
 
 const PORT = 3000;
 
-// Регистрация
+//     регистрация
+
 app.post('/api/register', async (req, res) => {
     try {
         const { full_name, login, phone, password } = req.body;
-        
+
         if (!full_name || !login || !phone || !password) {
             return res.status(400).json({ error: 'Все поля обязательны' });
         }
-        
+
         const [existing] = await conect.execute(
-            'SELECT id FROM user WHERE login = ? OR phone = ?',
+            'SELECT id FROM `user` WHERE login = ? OR phone = ?',
             [login, phone]
         );
-        
+
         if (existing.length > 0) {
             return res.status(409).json({ error: 'Логин или телефон уже существует' });
         }
-        
-        const hashedPassword = await bcrypt.hash(password, 10);
-        
+
         const [result] = await conect.execute(
-            'INSERT INTO user (id_role, login, password, full_name, phone) VALUES (1, ?, ?, ?, ?)',
-            [login, hashedPassword, full_name, phone]
+            'INSERT INTO `user` (id_role, login, password, full_name, phone) VALUES (?, ?, ?, ?, ?)',
+            [1, login, password, full_name, phone]
         );
-        
-        res.status(201).json({ 
+
+        res.status(201).json({
             message: 'Регистрация успешна',
-            user_id: result.insertId 
+            user_id: result.insertId
         });
-        
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Ошибка сервера' });
@@ -52,7 +50,7 @@ app.post('/api/register', async (req, res) => {
 });
 
 
-// войти
+//        войти
 
 app.post('/api/login', async (req, res) => {
     try {
@@ -63,7 +61,7 @@ app.post('/api/login', async (req, res) => {
         }
 
         const [users] = await conect.execute(
-            'SELECT * FROM user WHERE login = ?',
+            'SELECT * FROM `user` WHERE login = ?',
             [login]
         );
 
@@ -73,9 +71,7 @@ app.post('/api/login', async (req, res) => {
 
         const user = users[0];
 
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
+        if (password !== user.password) {
             return res.status(401).json({ error: 'Неверный пароль' });
         }
 
@@ -84,7 +80,8 @@ app.post('/api/login', async (req, res) => {
             user: {
                 id: user.id,
                 login: user.login,
-                full_name: user.full_name
+                full_name: user.full_name,
+                role: user.id_role
             }
         });
 
@@ -93,10 +90,6 @@ app.post('/api/login', async (req, res) => {
         res.status(500).json({ error: 'Ошибка сервера' });
     }
 });
-
-
-
-
 
 app.listen(PORT, () => {
     console.log(`Сервер запущен на http://localhost:${PORT}`);
