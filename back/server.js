@@ -109,7 +109,6 @@ app.get('/api/requests', async (req, res) => {
             JOIN status ON request.id_status = status.id
             ORDER BY request.id DESC
         `);
-
         res.json(rows);
 
     } catch (error) {
