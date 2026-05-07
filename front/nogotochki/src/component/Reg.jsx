@@ -33,7 +33,8 @@ if (!response.ok) {
   return
 }
 
-alert('Регистрация успешна')
+alert("Регистрация успешна")
+window.location.href = "/requests"
 
   }
   

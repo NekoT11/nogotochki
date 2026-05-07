@@ -91,6 +91,34 @@ app.post('/api/login', async (req, res) => {
 });
 
 
+
+///    заявкм
+
+app.get('/api/requests', async (req, res) => {
+    try {
+        const [rows] = await conect.execute(`
+            SELECT 
+                request.id,
+                user.full_name AS user_name,
+                master.name AS master_name,
+                status.name AS status_name,
+                request.booking_datetime
+            FROM request
+            JOIN user ON request.id_user = user.id
+            JOIN master ON request.id_master = master.id
+            JOIN status ON request.id_status = status.id
+            ORDER BY request.id DESC
+        `);
+
+        res.json(rows);
+
+    } catch (error) {
+        res.status(500).json({ error: 'Ошибка сервера' });
+    }
+});
+
+
+
 app.listen(PORT, () => {
     console.log(`Сервер запущен на http://localhost:${PORT}`);
 });

@@ -41,6 +41,7 @@ export function Auth() {
 
 
       alert('Успешный вход')
+    window.location.href = "/requests"
 
     } catch (err) {
       console.error(err)
@@ -50,7 +51,7 @@ export function Auth() {
 
   return (
     <>
-      <h1>Авторизация</h1>
+      <h1>Войти</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
