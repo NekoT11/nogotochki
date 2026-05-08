@@ -118,6 +118,36 @@ app.get('/api/requests', async (req, res) => {
 
 
 
+// выборочн заявки
+
+app.get('/api/requests/user/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+
+        const [rows] = await conect.execute(`
+            SELECT 
+                request.id,
+                master.name AS master_name,
+                status.name AS status_name,
+                request.booking_datetime
+            FROM request
+            JOIN master ON request.id_master = master.id
+            JOIN status ON request.id_status = status.id
+            WHERE request.id_user = ?
+            ORDER BY request.id DESC
+        `, [userId]);
+
+        res.json(rows);
+
+    } catch (error) {
+        res.status(500).json({ error: 'Ошибка сервера' });
+    }
+});
+
+
+
+
+
 app.listen(PORT, () => {
     console.log(`Сервер запущен на http://localhost:${PORT}`);
 });

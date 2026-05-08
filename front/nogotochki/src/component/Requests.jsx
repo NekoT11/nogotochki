@@ -3,19 +3,29 @@ import { useEffect, useState } from "react";
 export function Requests() {
   const [requests, setRequests] = useState([]);
 
-  useEffect(() => {
-    async function load() {
-      try {
-        const res = await fetch("http://localhost:3000/api/requests");
-        const data = await res.json();
-        setRequests(data);
-      } catch {
-        alert("Ошибка загрузки заявок");
-      }
+ useEffect(() => {
+  async function load() {
+    const userId = localStorage.getItem("userId");
+    const role = localStorage.getItem("userRole");
+
+    let url = "http://localhost:3000/api/requests";
+
+    if (role !== "2") {
+      url = `http://localhost:3000/api/requests/user/${userId}`;
     }
 
-    load();
-  }, []);
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      setRequests(data);
+    } catch {
+      alert("Ошибка загрузки заявок");
+    }
+  }
+
+  load();
+}, []);
+
 
   return (
     <>

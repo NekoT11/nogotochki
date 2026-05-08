@@ -41,7 +41,11 @@ export function Auth() {
 
 
       alert('Успешный вход')
-    window.location.href = "/requests"
+   localStorage.setItem("userId", data.user.id)
+  localStorage.setItem("userRole", data.user.role)
+  window.location.href = "/requests"
+
+
 
     } catch (err) {
       console.error(err)
