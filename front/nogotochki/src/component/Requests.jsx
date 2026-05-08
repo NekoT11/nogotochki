@@ -4,10 +4,17 @@ export function Requests() {
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/requests")
-      .then(res => res.json())
-      .then(data => setRequests(data))
-      .catch(() => alert("Ошибка загрузки заявок"));
+    async function load() {
+      try {
+        const res = await fetch("http://localhost:3000/api/requests");
+        const data = await res.json();
+        setRequests(data);
+      } catch {
+        alert("Ошибка загрузки заявок");
+      }
+    }
+
+    load();
   }, []);
 
   return (
@@ -16,16 +23,27 @@ export function Requests() {
 
       {requests.length === 0 && <p>Заявок пока нет</p>}
 
-      <ul>
-        {requests.map(req => (
-          <li key={req.id}>
-            <b>Пользователь:</b> {req.user_name} <br />
-            <b>Мастер:</b> {req.master_name} <br />
-            <b>Статус:</b> {req.status_name} <br />
-            <b>Дата:</b> {req.booking_datetime}
-          </li>
-        ))}
-      </ul>
+      {requests.length > 0 && (
+        <table border="1" cellPadding="8">
+          <thead>
+            <tr>
+              <th>Мастер</th>
+              <th>Дата и время</th>
+              <th>Статус</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {requests.map(req => (
+              <tr key={req.id}>
+                <td>{req.master_name}</td>
+                <td>{req.booking_datetime}</td>
+                <td>{req.status_name}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </>
   );
 }
