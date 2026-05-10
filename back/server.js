@@ -146,6 +146,25 @@ app.get('/api/requests/user/:id', async (req, res) => {
 
 
 
+//  изменить статус заявки
+app.put('/api/requests/status/:id', async (req, res) => {
+    try {
+        const requestId = req.params.id;
+        const { statusId } = req.body;
+
+        await conect.execute(
+            'UPDATE request SET id_status = ? WHERE id = ?',
+            [statusId, requestId]
+        );
+
+        res.json({ message: 'Статус обновлён' });
+
+    } catch (error) {
+        res.status(500).json({ error: 'Ошибка сервера' });
+    }
+});
+ 
+
 
 
 app.listen(PORT, () => {
