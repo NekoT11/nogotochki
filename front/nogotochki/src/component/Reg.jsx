@@ -17,6 +17,9 @@ export function Reg() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    localStorage.clear();
+
     
     const response = await fetch('http://localhost:3000/api/register', {
       method: 'POST',
@@ -72,6 +75,8 @@ window.location.href = "/requests"
         />    
         <button type="submit">Зарегистрироваться</button>
       </form>
+      <p>Есть аккаунт?</p>
+      <button onClick={() =>   window.location.href = "/auth"}>Войти</button>
     </>
   )
 }

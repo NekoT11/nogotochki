@@ -4,7 +4,14 @@ export function Requests() {
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
+
+
+
     const userId = localStorage.getItem("userId");
+    if (!userId) {
+    window.location.href = "/auth";
+  }
+    
     const role = localStorage.getItem("userRole");
 
     let url = "http://localhost:3000/api/requests"; 
@@ -48,6 +55,12 @@ export function Requests() {
   return (
     <>
       <h1>Заявки</h1>
+<button onClick={() => {
+  localStorage.clear();
+  window.location.href = "/auth";
+}}>
+  Выйти
+</button>
 
       {requests.length === 0 && <p>Заявок пока нет</p>}
 
@@ -60,7 +73,7 @@ export function Requests() {
               <th>Статус</th>
               {localStorage.getItem("userRole") === "2" && <th>Действие</th>}
             </tr>
-          </thead>
+          </thead> 
 
           <tbody>
             {requests.map(req => (

@@ -16,6 +16,9 @@ export function Auth() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    localStorage.clear();
+
+
     if (!formData.login || !formData.password) {
       alert('Заполни все поля')
       return
@@ -75,6 +78,8 @@ export function Auth() {
 
         <button type="submit">Войти</button>
       </form>
+      <p>Нет аккаунта?</p>
+      <button onClick={() =>   window.location.href = "/reg"}>Зарегистрироваться</button>
     </>
   )
 }
