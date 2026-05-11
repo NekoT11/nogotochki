@@ -43,6 +43,7 @@ window.location.href = "/requests"
   
   return (
     <>
+    <div className="auth-container">
       <h1>Регистрация</h1>
       <form onSubmit={handleSubmit}>
         <input 
@@ -77,6 +78,7 @@ window.location.href = "/requests"
       </form>
       <p>Есть аккаунт?</p>
       <button onClick={() =>   window.location.href = "/auth"}>Войти</button>
+      </div>
     </>
   )
 }

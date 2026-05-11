@@ -164,6 +164,36 @@ app.put('/api/requests/status/:id', async (req, res) => {
     }
 });
  
+// мастера
+app.get('/api/masters', async (req, res) => {
+    try {
+        const [rows] = await conect.execute("SELECT id, name FROM master");
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({ error: "Ошибка сервера" });
+    }
+});
+
+
+// sozdanie zaivki 
+app.post('/api/requests/create', async (req, res) => {
+    try {
+        const { id_user, id_master, booking_datetime } = req.body;
+
+        await conect.execute(
+            'INSERT INTO request (id_user, id_master, id_status, booking_datetime) VALUES (?, ?, ?, ?)',
+            [id_user, id_master, 1, booking_datetime]
+        );
+
+        res.json({ message: "Заявка создана" });
+
+    } catch (error) {
+        res.status(500).json({ error: "Ошибка сервера" });
+    }
+});
+
+
+
 
 
 

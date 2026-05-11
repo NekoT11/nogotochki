@@ -182,3 +182,167 @@
     border-right-color: var(--border);
   }
 }
+
+
+
+/* ====== Таблица ====== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+th {
+  background: #f3f3f3;
+  padding: 10px;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/* ====== Кнопки действий ====== */
+button {
+  padding: 6px 12px;
+  margin-right: 6px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+/* Новая */
+button.status-new {
+  background: #dcdcdc;
+  color: #333;
+}
+
+/* Подтвердить */
+button.status-ok {
+  background: #4caf50;
+  color: white;
+}
+
+/* Отменить */
+button.status-cancel {
+  background: #e53935;
+  color: white;
+}
+
+/* Hover */
+button:hover {
+  opacity: 0.85;
+}
+
+/* ====== Кнопка выхода ====== */
+.logout-btn {
+  background: #444;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+.logout-btn:hover {
+  background: #000;
+}
+
+
+
+.create-btn {
+  background: #6a5acd;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.create-btn:hover {
+  background: #5848c2;
+}
+
+
+
+/* ====== Контейнер формы ====== */
+.auth-container {
+  width: 380px;
+  margin: 60px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Заголовок */
+.auth-container h1 {
+  margin-bottom: 25px;
+  font-size: 28px;
+  color: #333;
+}
+
+/* Поля ввода */
+.auth-container input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 15px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+.auth-container input:focus {
+  border-color: #aa3bff;
+  box-shadow: 0 0 0 3px rgba(170, 59, 255, 0.2);
+  outline: none;
+}
+
+/* Кнопки */
+.auth-container button {
+  width: 100%;
+  padding: 12px;
+  background: #aa3bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 5px;
+}
+
+.auth-container button:hover {
+  background: #922fe0;
+}
+
+/* Кнопка-ссылка */
+.auth-container .link-btn {
+  background: #f3f3f3;
+  color: #333;
+}
+
+.auth-container .link-btn:hover {
+  background: #e6e6e6;
+}
+
+/* Текст под формой */
+.auth-container p {
+  margin-top: 15px;
+  color: #666;
+  font-size: 15px;
+}

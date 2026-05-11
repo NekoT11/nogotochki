@@ -54,13 +54,19 @@ export function Requests() {
 
   return (
     <>
-      <h1>Заявки</h1>
-<button onClick={() => {
-  localStorage.clear();
-  window.location.href = "/auth";
-}}>
+<button 
+  className="logout-btn"
+  onClick={() => {
+    localStorage.clear();
+    window.location.href = "/auth";
+  }}
+>
   Выйти
 </button>
+
+
+      <h1>Заявки</h1>
+
 
       {requests.length === 0 && <p>Заявок пока нет</p>}
 
@@ -84,9 +90,9 @@ export function Requests() {
 
                 {localStorage.getItem("userRole") === "2" && (
                   <td>
-                    <button onClick={() => updateStatus(req.id, 1)}>Новая</button>
-                    <button onClick={() => updateStatus(req.id, 4)}>Подтвердить</button>
-                    <button onClick={() => updateStatus(req.id, 3)}>Отменить</button>
+<button className="status-new" onClick={() => updateStatus(req.id, 1)}>Новая</button>
+<button className="status-ok" onClick={() => updateStatus(req.id, 4)}>Подтвердить</button>
+<button className="status-cancel" onClick={() => updateStatus(req.id, 3)}>Отменить</button>
                   </td>
                 )}
               </tr>
@@ -94,6 +100,13 @@ export function Requests() {
           </tbody>
         </table>
       )}
+      <button 
+  className="create-btn"
+  onClick={() => window.location.href = "/create-request"}
+>
+  Создать заявку
+</button>
+
     </>
   );
 }

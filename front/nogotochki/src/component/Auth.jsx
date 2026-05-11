@@ -43,7 +43,7 @@ export function Auth() {
 }
 
 
-      alert('Успешный вход')
+      // alert('Успешный вход')
    localStorage.setItem("userId", data.user.id)
   localStorage.setItem("userRole", data.user.role)
   window.location.href = "/requests"
@@ -58,6 +58,7 @@ export function Auth() {
 
   return (
     <>
+    <div className="auth-container">
       <h1>Войти</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -80,6 +81,7 @@ export function Auth() {
       </form>
       <p>Нет аккаунта?</p>
       <button onClick={() =>   window.location.href = "/reg"}>Зарегистрироваться</button>
+    </div>
     </>
   )
 }
